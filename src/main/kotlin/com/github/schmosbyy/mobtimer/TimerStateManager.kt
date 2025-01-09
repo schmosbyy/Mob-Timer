@@ -6,4 +6,7 @@ object TimerStateManager {
     var isTimerPaused: Boolean = true
     @Volatile
     var isToggleTriggered: Boolean = false
+    @Volatile
+    var webViewOpenedOnce: Boolean = false
+
 }

@@ -9,14 +9,19 @@ import com.intellij.openapi.wm.ex.ToolWindowManagerListener
 import com.intellij.ui.jcef.JBCefBrowser
 import com.github.schmosbyy.mobtimer.TimerStateManager.isTimerPaused
 import com.github.schmosbyy.mobtimer.TimerStateManager.isToggleTriggered
+import com.github.schmosbyy.mobtimer.TimerStateManager.webViewOpenedOnce
 import org.jetbrains.annotations.NotNull
 
 class ToolListener(private val project: Project) : ToolWindowManagerListener {
     override fun stateChanged(@NotNull toolWindowManager: ToolWindowManager) {
         val toolWindow = toolWindowManager.getToolWindow(toolWindowManager.activeToolWindowId) ?: return
-
-        if (toolWindow.id == "PlayPauseTimer" && toolWindow.isVisible) {
-            toggleTimer(toolWindowManager, toolWindow)
+        if(toolWindow.id == "MobTimer" && !webViewOpenedOnce){
+            webViewOpenedOnce=true
+        }
+        if(webViewOpenedOnce){
+            if (toolWindow.id == "PlayPauseTimer" && toolWindow.isVisible) {
+                toggleTimer(toolWindowManager, toolWindow)
+            }
         }
     }
 
