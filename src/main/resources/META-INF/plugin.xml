@@ -6,13 +6,19 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.schmosbyy.mobtimer.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow id="MobTimer" anchor="right" factoryClass="com.github.schmosbyy.mobtimer.WebViewToolWindowFactory"
+                    icon="AllIcons.Actions.ProfileRed"/>
+        <toolWindow id="PlayPauseTimer" anchor="right" factoryClass="com.github.schmosbyy.mobtimer.PlayPauseToolWindowFactory"
+                    icon="AllIcons.Actions.RunAll"/>
+        <notificationGroup id="ballonNotificationGroup"
+                           displayType="BALLOON"/>
+        <projectService serviceImplementation="com.github.schmosbyy.mobtimer.settings.VehiklPluginSettings"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.schmosbyy.mobtimer.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <projectListeners>
+        <listener
+                class="com.github.schmosbyy.mobtimer.ToolListener"
+                topic="com.intellij.openapi.wm.ex.ToolWindowManagerListener"/>
+    </projectListeners>
 </idea-plugin>
