@@ -24,6 +24,7 @@ class ChromiumDisplayHandler(
     @Volatile
     private var isPaused: Boolean = false
     private var lastTitleTime: String? = "00:60"
+    private var driverName: String? = ""
 
     init {
         println("ChromiumDisplayHandler initialized")
@@ -40,7 +41,7 @@ class ChromiumDisplayHandler(
             TimerStateManager.isTimerPaused = true
         }
         if(message.contains("Driver Name: ")){
-            updateStatusBar(message);
+            driverName = message
         }
         return false // No action needed on console message
     }
@@ -83,6 +84,9 @@ class ChromiumDisplayHandler(
                 if (currentState != TimerState.RUNNING) {
                     handleTimerRunning(browser)
                 }
+            }
+            if (title?.matches(".*\\d+.*mobtime.*".toRegex())== true){
+                updateStatusBar(driverName+" ["+lastTitleTime+"] ")
             }
             // If we see the ended state, handle it regardless of pause state
             if (title == "mobtime") {

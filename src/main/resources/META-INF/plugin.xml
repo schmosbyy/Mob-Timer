@@ -14,7 +14,22 @@
         <notificationGroup id="ballonNotificationGroup"
                            displayType="BALLOON"/>
         <projectService serviceImplementation="com.github.schmosbyy.mobtimer.settings.VehiklPluginSettings"/>
+
     </extensions>
+    <actions>
+        <action id="toggleMobTimerAction"
+                class="com.github.schmosbyy.mobtimer.ToggleMobTimerAction"
+                text="Toggle Mob Timer"
+                description="Toggles the Mob Timer tool window">
+            <keyboard-shortcut keymap="$default" first-keystroke="cmd \"/>
+        </action>
+        <action id="toggleMobTimerPauseAction"
+                class="com.github.schmosbyy.mobtimer.ToggleMobTimerPauseAction"
+                text="Toggle Mob Timer Pause/Play"
+                description="Toggles the Mob Timer tool window">
+            <keyboard-shortcut keymap="$default" first-keystroke="cmd \"/>
+        </action>
+    </actions>
 
     <projectListeners>
         <listener
