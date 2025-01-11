@@ -8,6 +8,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.ui.AnimatedIcon
+import com.intellij.ui.jcef.JBCefBrowser
 import org.cef.browser.CefBrowser
 import java.awt.EventQueue
 import java.util.*
@@ -112,6 +113,16 @@ object Utils {
         });
         """
         browser?.executeJavaScript(jsCode, browser.url, 0)
+    }
+
+    fun getBrowserInstance(toolWindow: ToolWindow?): JBCefBrowser? {
+        val content = toolWindow?.contentManager?.getContent(0)
+        return if (content?.component is JBCefBrowser.MyPanel) {
+            (content.component as JBCefBrowser.MyPanel).jbCefBrowser
+        } else {
+            println("Component is not JBCefBrowser.MyPanel!")
+            null
+        }
     }
 
 }

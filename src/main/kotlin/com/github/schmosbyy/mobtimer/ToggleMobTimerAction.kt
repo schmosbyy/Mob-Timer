@@ -6,7 +6,6 @@ import com.intellij.openapi.wm.ToolWindowManager
 
 class ToggleMobTimerAction : AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
-        println("here")
         val project = event.project ?: return
         val toolWindowManager = ToolWindowManager.getInstance(project)
         val mobTimer = toolWindowManager.getToolWindow("MobTimer")

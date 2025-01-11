@@ -35,7 +35,7 @@ class ToolListener(private val project: Project) : ToolWindowManagerListener {
         }
     }
 
-    private fun unPauseTimer(toolWindowManager: ToolWindowManager, toolWindow: ToolWindow, browser: JBCefBrowser?) {
+    fun unPauseTimer(toolWindowManager: ToolWindowManager, toolWindow: ToolWindow, browser: JBCefBrowser?) {
         toolWindow.isAvailable = false
         isTimerPaused = false
         Utils.triggerNotification("Mob Timer started!")
@@ -48,7 +48,7 @@ class ToolListener(private val project: Project) : ToolWindowManagerListener {
         toolWindow.isAvailable = true
     }
 
-    private fun pauseTimer(toolWindowManager: ToolWindowManager, toolWindow: ToolWindow, browser: JBCefBrowser?) {
+    fun pauseTimer(toolWindowManager: ToolWindowManager, toolWindow: ToolWindow, browser: JBCefBrowser?) {
         toolWindow.isAvailable = false // Set tool window as unavailable during the pause state
         Utils.triggerNotification("Mob Timer paused!")
             isTimerPaused = true
