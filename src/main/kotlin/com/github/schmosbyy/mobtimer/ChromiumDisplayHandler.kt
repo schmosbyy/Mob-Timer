@@ -9,6 +9,7 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.openapi.wm.WindowManager
 import com.github.schmosbyy.mobtimer.TimerStateManager.isToggleTriggered
+import com.intellij.openapi.wm.StatusBarWidgetFactory
 import org.cef.CefSettings
 import org.cef.browser.CefBrowser
 import org.cef.browser.CefFrame
@@ -47,22 +48,28 @@ class ChromiumDisplayHandler(
     }
     private fun updateStatusBar(message: String) {
         ApplicationManager.getApplication().invokeLater {
+            if (project.isDisposed) return@invokeLater
+
             val statusBar = WindowManager.getInstance().getStatusBar(project)
-            val existingWidget = statusBar.getWidget("CustomStatusBarWidget")
-            if (existingWidget != null) {
-                (existingWidget as? CustomStatusBarWidget)?.updateText(message)
-                statusBar.updateWidget(existingWidget.ID())
+            val widgetId = CustomStatusBarWidgetFactory.WIDGET_ID
+            val existingWidget = statusBar.getWidget(widgetId)
+            if (existingWidget is CustomStatusBarWidget) {
+                existingWidget.updateText(message)
+                statusBar.updateWidget(widgetId)
             } else {
-                if (!project.isDisposed) {
-                    val customWidget = CustomStatusBarWidget()
-                    statusBar.addWidget(customWidget, "before PositionWidget", project)
-                    customWidget.updateText(message)
-                    statusBar.updateWidget(customWidget.ID())
-                }
+                StatusBarWidgetFactory.EP_NAME.extensionList
+                    .find { it.id == widgetId }
+                    ?.let { factory ->
+                        if (factory.isAvailable(project)) {
+                            if (existingWidget != null) {
+                                factory.disposeWidget(existingWidget)
+                            }
+                            factory.createWidget(project)
+                        }
+                    }
             }
         }
     }
-
 
     override fun onTitleChange(browser: CefBrowser?, title: String?) {
         if (lastTitleTime!!.contains(':') && lastTitleTime!!.split(":").let { it[0].toInt() * 60 + it[1].toInt() } >= 2

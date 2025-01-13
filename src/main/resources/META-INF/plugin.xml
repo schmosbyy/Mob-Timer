@@ -14,6 +14,9 @@
         <notificationGroup id="ballonNotificationGroup"
                            displayType="BALLOON"/>
         <projectService serviceImplementation="com.github.schmosbyy.mobtimer.settings.VehiklPluginSettings"/>
+
+        <statusBarWidgetFactory implementation="com.github.schmosbyy.mobtimer.CustomStatusBarWidgetFactory"/>
+
     </extensions>
     <actions>
         <action id="toggleMobTimerAction"
