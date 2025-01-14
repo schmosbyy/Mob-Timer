@@ -15,8 +15,7 @@
                            displayType="BALLOON"/>
         <projectService serviceImplementation="com.github.schmosbyy.mobtimer.settings.VehiklPluginSettings"/>
 
-        <statusBarWidgetFactory implementation="com.github.schmosbyy.mobtimer.CustomStatusBarWidgetFactory"/>
-
+        <statusBarWidgetFactory implementation="com.github.schmosbyy.mobtimer.CustomStatusBarWidgetFactory" id="CustomStatusBarWidget"/>
     </extensions>
     <actions>
         <action id="toggleMobTimerAction"

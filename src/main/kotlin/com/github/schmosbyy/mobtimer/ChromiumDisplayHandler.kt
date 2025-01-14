@@ -127,10 +127,17 @@ class ChromiumDisplayHandler(
             ApplicationManager.getApplication().invokeLater {
                 toolWindow.setIcon(AllIcons.Actions.ProfileRed)
                 playPauseToolWindow?.setIcon(AllIcons.Actions.Resume)
-                Utils.triggerNotification("The mob timer is up!")
+//                Utils.triggerNotification("The mob timer is up!")
+                showMacOSNotification("Mob Timer", "The mob timer is up!")
                 updateStatusBar("Timer Up!");
+
             }
         }
+    }
+
+    private fun showMacOSNotification(title: String, message: String) {
+        val command = arrayOf("osascript", "-e", "display notification \"$message\" with title \"$title\" sound name \"Glass\"")
+        Runtime.getRuntime().exec(command)
     }
 
     override fun dispose() {
@@ -153,4 +160,3 @@ class ChromiumDisplayHandler(
         // Not needed, but required by interface
     }
 }
-
