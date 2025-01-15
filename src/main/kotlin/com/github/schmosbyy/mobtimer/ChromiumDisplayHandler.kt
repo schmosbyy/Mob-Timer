@@ -38,12 +38,16 @@ class ChromiumDisplayHandler(
 
     override fun onConsoleMessage(cefBrowser: CefBrowser, logSeverity: CefSettings.LogSeverity, message: String, source: String, line: Int): Boolean {
         if(message.contains("skipTriggered")){
-            handleTimerEnded();
+            handleTimerEnded(cefBrowser);
             TimerStateManager.isTimerPaused = true
         }
         if(message.contains("Driver Name: ")){
             driverName = message
         }
+        if(message.contains("Next Driver:")){
+            updateStatusBar("Timer Up! [$message]");
+        }
+
         return false // No action needed on console message
     }
     private fun updateStatusBar(message: String) {
@@ -97,7 +101,8 @@ class ChromiumDisplayHandler(
             }
             // If we see the ended state, handle it regardless of pause state
             if (title == "mobtime") {
-                handleTimerEnded()
+                println("mobtime handleTimerEnded")
+                handleTimerEnded(browser)
             }
         }
     }
@@ -120,11 +125,11 @@ class ChromiumDisplayHandler(
         }
     }
 
-    private fun handleTimerEnded() {
+    private fun handleTimerEnded(browser: CefBrowser?) {
         if (currentState != TimerState.ENDED) {
             currentState = TimerState.ENDED
-            
             ApplicationManager.getApplication().invokeLater {
+                Utils.executeGenerateNextDriverName(browser)
                 toolWindow.setIcon(AllIcons.Actions.ProfileRed)
                 playPauseToolWindow?.setIcon(AllIcons.Actions.Resume)
                 if(isMacOS()){
@@ -132,8 +137,6 @@ class ChromiumDisplayHandler(
                 }else{
                     Utils.triggerNotification("The mob timer is up!")
                 }
-                updateStatusBar("Timer Up!");
-
             }
         }
     }

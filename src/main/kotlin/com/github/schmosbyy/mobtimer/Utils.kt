@@ -88,6 +88,32 @@ object Utils {
         """
         browser?.executeJavaScript(jsCode, browser.url, 0)
     }
+    fun executeGenerateNextDriverName(browser: CefBrowser?) {
+        val jsCode = """
+        function getNextDriverName() {
+            const processedValues = new Set();
+            let nextDriver = '';
+            const flexDivs = document.querySelectorAll('.flex.flex-row');
+            for (const div of flexDivs) {
+                const label = div.querySelector('div > div:nth-child(1)')?.textContent.trim().toLowerCase();
+                const value = div.querySelector('div > div:nth-child(2)')?.textContent.trim().toLowerCase();
+                if (!label || !value || processedValues.has(value)) {
+                    continue; // Skip invalid or duplicate values
+                }
+                processedValues.add(value);
+                if (label.includes('member')) {
+                    nextDriver = value;
+                    break; // Exit loop immediately after finding 'member'
+                } else if (label.includes('navigator')) {
+                    nextDriver = value; // Continue checking for 'member' if 'navigator' is found
+                }
+            }
+            console.log('Next Driver: ', nextDriver);
+        }
+        getNextDriverName(); 
+        """
+        browser?.executeJavaScript(jsCode, browser.url, 0)
+    }
 
     fun executeDisplayNone(browser: CefBrowser?) {
         val jsCode = """
