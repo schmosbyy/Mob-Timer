@@ -1,7 +1,6 @@
 # Mob-Timer
 
-[![Version]](https://plugins.jetbrains.com/plugin/26317)
-[![Downloads]](https://plugins.jetbrains.com/plugin/26317)
+[[Download from JetBrains MarketPlace]](https://plugins.jetbrains.com/plugin/26317)
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.
