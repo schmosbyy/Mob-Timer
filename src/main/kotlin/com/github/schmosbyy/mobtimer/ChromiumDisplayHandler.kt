@@ -41,7 +41,7 @@ class ChromiumDisplayHandler(
             handleTimerEnded(cefBrowser);
             TimerStateManager.isTimerPaused = true
         }
-        if(message.contains("Driver Name: ")){
+        if(message.contains("Driver :")){
             driverName = message
         }
         if(message.contains("Next Driver:")){
@@ -97,7 +97,8 @@ class ChromiumDisplayHandler(
                 }
             }
             if (title?.matches(".*\\d+.*mobtime.*".toRegex())== true){
-                updateStatusBar(driverName+" ["+lastTitleTime+"] ")
+                updateStatusBar("" +
+                        "| "+driverName+" ["+lastTitleTime+"] |")
             }
             // If we see the ended state, handle it regardless of pause state
             if (title == "mobtime") {

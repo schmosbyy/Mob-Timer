@@ -82,7 +82,7 @@ object Utils {
             const divs = item.querySelectorAll('div');
             if (divs.length > 1 && divs[0].textContent.trim() === 'Driver') {
                 const secondDivValue = divs[1].textContent.trim();
-                console.log('Driver Name: ' + secondDivValue); // This will output the value of the second div (e.g., "s")
+                console.log('Driver : ' + secondDivValue); // This will output the value of the second div (e.g., "s")
             }
         });
         """
